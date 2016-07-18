@@ -1,0 +1,9 @@
+F:\Tests\x64_dbg\x64_dbg_src\bin\x64\plugins\x64dbgDotNetPlugin.dll
+F:\Tests\x64_dbg\x64_dbg_src\bin\x64\plugins\x64dbgDotNetPlugin.pdb
+F:\Tests\x64_dbg\x64_dbg_src\bin\x64\plugins\x64dbgDotNetPlugin.xml
+F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.vbprojResolveAssemblyReference.cache
+F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.Resources.resources
+F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.vbproj.GenerateResource.Cache
+F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.dll
+F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.xml
+F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.pdb
