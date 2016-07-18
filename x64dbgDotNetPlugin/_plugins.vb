@@ -24,6 +24,9 @@ Module _plugins
     <DllImport("x64_dbg.dll")> _
     Public Function _plugin_menuaddentry(ByVal hMenu As Integer, ByVal hEntry As Integer, ByVal title As String) As Boolean
     End Function
+    <DllImport("x64_dbg.dll")> _
+    Public Function _plugin_menuadd(ByVal hMenu As Integer, ByVal title As String) As Int32
+    End Function
 
     Public Enum CBTYPE
         CB_INITDEBUG 'PLUG_CB_INITDEBUG
@@ -48,6 +51,10 @@ Module _plugins
         CB_WINEVENT 'PLUG_CB_WINEVENT
         CB_WINEVENTGLOBAL 'PLUG_CB_WINEVENTGLOBAL
     End Enum
+    <StructLayout(LayoutKind.Sequential)> Public Structure PLUG_CB_MENUENTRY
+        Dim hEntry As Int32
+    End Structure
+
     <StructLayout(LayoutKind.Sequential)> Public Structure PLUG_INITSTRUCT
         '//provided by the debugger
         'int pluginHandle;
@@ -67,13 +74,13 @@ Module _plugins
         'HWND hwndDlg; //gui window handle
         Dim hwndDlg As IntPtr
         'int hMenu; //plugin menu handle
-        Dim hMenu As Int64
+        Dim hMenu As Int32
         'int hMenuDisasm; //plugin disasm menu handle
-        Dim hMenuDisasm As Int64
+        Dim hMenuDisasm As Int32
         'int hMenuDump; //plugin dump menu handle
-        Dim hMenuDump As Int64
+        Dim hMenuDump As Int32
         'int hMenuStack; //plugin stack menu handle
-        Dim hMenuStack As Int64
+        Dim hMenuStack As Int32
     End Structure
     'callback structures
     <StructLayout(LayoutKind.Sequential)> Public Structure PLUG_CB_INITDEBUG

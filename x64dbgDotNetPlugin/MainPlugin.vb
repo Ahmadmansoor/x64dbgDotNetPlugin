@@ -9,7 +9,6 @@ Module MainPlugin
     Const plugin_version = 1
     Public hwndDlg As IntPtr
     Public hMenu As Int64
-
     <DllExport("pluginit")> _
     Public Function pluginit(ByRef initStruct As PLUG_INITSTRUCT) As Boolean
         pluginHandle = Marshal.GetHINSTANCE(System.Reflection.Assembly.GetExecutingAssembly.GetModules()(0)).ToInt32()
@@ -17,16 +16,22 @@ Module MainPlugin
         initStruct.pluginVersion = 1
         initStruct.pluginName = plugin_name
         'pluginHandle = initStruct.pluginHandle
-
         PlugIn_Init(initStruct)
         Return True
     End Function
-
-
     <DllExport("plugstop")> _
     Private Function plugstop() As Boolean
+        PlugIn_Stop()
         Return True
     End Function
+    <DllExport("plugsetup")> _
+    Private Sub plugsetup(ByRef setupStruct As PLUG_SETUPSTRUCT)
+        hwndDlg = setupStruct.hwndDlg
+        hMenu = setupStruct.hMenu
+        PlugIn_SetUp()
+    End Sub
+
+
 
     '<DllExport("TEST")> _
     'Private Function TEST(ByVal s As Integer) As Boolean
@@ -34,9 +39,4 @@ Module MainPlugin
     '    Return True
     'End Function
 
-    <DllExport("plugsetup")> _
-    Private Sub plugsetup(ByRef setupStruct As PLUG_SETUPSTRUCT)
-        hwndDlg = setupStruct.hwndDlg
-        hMenu = setupStruct.hMenu
-    End Sub
 End Module
