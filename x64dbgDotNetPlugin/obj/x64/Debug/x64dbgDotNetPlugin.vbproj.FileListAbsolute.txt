@@ -7,3 +7,15 @@ F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64
 F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.dll
 F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.xml
 F:\Tests\x64_dbg\Plugins\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.pdb
+D:\Code\x64dbg\bin\x64\plugins\x64dbgDotNetPlugin.dll
+D:\Code\x64dbg\bin\x64\plugins\x64dbgDotNetPlugin.pdb
+D:\Code\x64dbg\bin\x64\plugins\x64dbgDotNetPlugin.xml
+D:\Code\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.vbprojResolveAssemblyReference.cache
+D:\Code\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.Resources.resources
+D:\Code\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.vbproj.GenerateResource.Cache
+D:\Code\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.dll
+D:\Code\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.xml
+D:\Code\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.pdb
+D:\Code\x64dbg\bin\x64d\plugins\x64dbgDotNetPlugin.dll
+D:\Code\x64dbg\bin\x64d\plugins\x64dbgDotNetPlugin.pdb
+D:\Code\x64dbg\bin\x64d\plugins\x64dbgDotNetPlugin.xml

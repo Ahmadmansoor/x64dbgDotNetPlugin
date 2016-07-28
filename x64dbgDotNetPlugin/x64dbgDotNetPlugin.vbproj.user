@@ -5,6 +5,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <StartAction>Program</StartAction>
-    <StartProgram>F:\Tests\x64_dbg\x64_dbg_src\bin\x64\x64_dbg.exe</StartProgram>
+    <StartProgram>D:\Code\x64dbg\bin\x64d\x64dbg.exe</StartProgram>
   </PropertyGroup>
 </Project>

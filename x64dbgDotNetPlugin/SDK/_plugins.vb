@@ -6,6 +6,7 @@ Module _plugins
     Public pluginHandle As Integer
 
     Public Delegate Sub CBPLUGIN(ByVal cbType As CBTYPE, ByRef callbackInfo As Object)
+    Public Delegate Function CBPLUGINCOMMAND(ByVal argc As Integer, ByVal argv() As String) As Boolean
     <DllImport("x64_dbg.dll")> _
     Public Function _plugin_menuclear(ByVal hMenu As Integer) As Boolean
     End Function
@@ -27,6 +28,10 @@ Module _plugins
     <DllImport("x64_dbg.dll")> _
     Public Function _plugin_menuadd(ByVal hMenu As Integer, ByVal title As String) As Int32
     End Function
+    <DllImport("x64_dbg.dll")> _
+    Public Function _plugin_registercommand(ByVal pluginHandle As Integer, ByVal command As String, ByVal cbCommand As CBPLUGINCOMMAND, ByVal debugonly As Boolean) As Boolean
+    End Function
+
 
     Public Enum CBTYPE
         CB_INITDEBUG 'PLUG_CB_INITDEBUG

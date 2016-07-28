@@ -7,13 +7,14 @@ Imports x64dbgDotNetPlugin.FunctionCode
 Module MainPlugin
     Const plugin_name = ".net Test"
     Const plugin_version = 1
+    Const PLUG_SDKVERSION = 1
     Public hwndDlg As IntPtr
     Public hMenu As Int64
     <DllExport("pluginit")> _
     Public Function pluginit(ByRef initStruct As PLUG_INITSTRUCT) As Boolean
         pluginHandle = Marshal.GetHINSTANCE(System.Reflection.Assembly.GetExecutingAssembly.GetModules()(0)).ToInt32()
-        initStruct.sdkVersion = 1
-        initStruct.pluginVersion = 1
+        initStruct.sdkVersion = plugin_version
+        initStruct.pluginVersion = PLUG_SDKVERSION
         initStruct.pluginName = plugin_name
         'pluginHandle = initStruct.pluginHandle
         PlugIn_Init(initStruct)
