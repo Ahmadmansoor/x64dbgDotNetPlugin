@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports System.Runtime.InteropServices
 
 Module RegisteredCommands
     Const MAX_MODULE_SIZE = 256
@@ -22,12 +23,30 @@ Module RegisteredCommands
         Else
             entry = DbgValFromString(argv(1))
         End If
-        Dim _mod As String
-        If Not DbgGetModuleAt(entry, _mod) Then
+        ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        '' test to get the string from text in the Function DbgGetModuleAt(ByVal addr As Int64, ByVal text As IntPtr) As Boolean
+        'Dim incoming As IntPtr = Marshal.AllocHGlobal(256)
+        'Dim retVal As String = ""
+        'Try
+        '    'ZeroMemory(incoming, 256)  no need to use 
+        '    DbgGetModuleAt(entry, incoming)
+        '    retVal = Marshal.PtrToStringAnsi(incoming) ' here it must be used PtrToStringAnsi as we define this <DllImport("x64_bridge.dll", EntryPoint:="DbgGetModuleAt", CharSet:=CharSet.Ansi, CallingConvention:=CallingConvention.Cdecl)> _
+        '    Marshal.FreeHGlobal(incoming)
+        '    Return True
+        '    Exit Function
+        'Catch ex As Exception
+        '    ' Add some exception handling here '
+        '    MsgBox(ex.ToString, MsgBoxStyle.OkOnly, "Error")
+        'End Try
+        ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+        Dim _modIntPtr As IntPtr = Marshal.AllocHGlobal(256)
+        Dim _mod As String = String.Empty
+        If Not DbgGetModuleAt(entry, _modIntPtr) Then
             _plugin_logprintf("[DotNet TEST] no module at %p..." & ControlChars.Lf, entry)
             Return False
         End If
-        Dim base As Int64 = DbgModBaseFromName(_mod)
+        _mod = Marshal.PtrToStringAnsi(_modIntPtr)
+        Dim base As Int64 = DbgModBaseFromName(_mod.ToString)
         If base = Nothing Then
             _plugin_logputs("[DotNet TEST] could not get module base...")
             Return False
