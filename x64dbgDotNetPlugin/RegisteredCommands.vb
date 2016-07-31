@@ -39,22 +39,24 @@ Module RegisteredCommands
         '    MsgBox(ex.ToString, MsgBoxStyle.OkOnly, "Error")
         'End Try
         ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-        Dim _modIntPtr As IntPtr = Marshal.AllocHGlobal(256)
-        Dim _mod As String = String.Empty
+        Dim _modIntPtr As IntPtr = Marshal.AllocHGlobal(256) 'Define a Pointer to the memoery which hold the string 
+        Dim _mod As String = String.Empty ' Define the variable which will hold the string later 
         If Not DbgGetModuleAt(entry, _modIntPtr) Then
             _plugin_logprintf("[DotNet TEST] no module at %p..." & ControlChars.Lf, entry)
             Return False
         End If
         _mod = Marshal.PtrToStringAnsi(_modIntPtr)
-        Dim base As Int64 = DbgModBaseFromName(_mod.ToString)
+        Dim base As Int64 = DbgModBaseFromName(_mod)
         If base = Nothing Then
             _plugin_logputs("[DotNet TEST] could not get module base...")
             Return False
         End If
-        Dim hProcess As System.IntPtr = CType(TitanGetProcessInformation(), PROCESS_INFORMATION).hProcess
-        Dim _mods As StringBuilder = New StringBuilder()
+        Dim _PROCESS_INFORMATION As PROCESS_INFORMATION = Marshal.PtrToStructure(TitanGetProcessInformation(), GetType(PROCESS_INFORMATION))
+        Dim hProcess As System.IntPtr = _PROCESS_INFORMATION.hProcess
+        Dim _mods As StringBuilder = New StringBuilder() ' we use StringBuilder because the size of string will changed to get more char like ntdll to ntdll.dll
         _mods.Append(_mod)
-        If Not GetModuleBaseNameA(hProcess, CType(base, System.IntPtr), _mods, MAX_MODULE_SIZE) Then
+        'Dim x As Int64 = GetModuleBaseNameA(hProcess, base, _mods, MAX_MODULE_SIZE)
+        If GetModuleBaseNameA(hProcess, base, _mods, MAX_MODULE_SIZE) = Nothing Then
             _plugin_logputs("[DotNet TEST] could not get module base name...")
             Return False
         End If

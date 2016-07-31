@@ -5,7 +5,7 @@ Module TitanEngine
     Public Function GetContextData(ByVal IndexOfRegister As UInt32) As IntPtr
     End Function
     <DllImport("TitanEngine.dll")> _
-    Public Function TitanGetProcessInformation() As PROCESS_INFORMATION
+    Public Function TitanGetProcessInformation() As IntPtr 'PROCESS_INFORMATION
     End Function
 
 

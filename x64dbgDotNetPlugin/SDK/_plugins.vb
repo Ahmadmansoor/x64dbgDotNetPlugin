@@ -177,7 +177,7 @@ Module _plugins
         Public MachineType As UInteger ' IMAGE_FILE_MACHINE_XXX from ntimage.h and winnt.h
         Public Reserved As UInteger ' Padding - don't remove.
     End Structure
-    Structure PROCESS_INFORMATION
+    <StructLayout(LayoutKind.Sequential)> Structure PROCESS_INFORMATION
         Public hProcess As IntPtr
         Public hThread As IntPtr
         Public dwProcessId As Integer
