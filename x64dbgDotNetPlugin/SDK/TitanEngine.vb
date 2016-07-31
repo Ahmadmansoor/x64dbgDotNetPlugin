@@ -7,7 +7,9 @@ Module TitanEngine
     <DllImport("TitanEngine.dll")> _
     Public Function TitanGetProcessInformation() As IntPtr 'PROCESS_INFORMATION
     End Function
-
+    <DllImport("TitanEngine.dll")> _
+    Public Function DumpProcess(ByVal hProcess As System.IntPtr, ByVal ImageBase As Int64, ByVal szDumpFileName As String, ByVal EntryPoint As Int64) As Boolean
+    End Function
 
 
     ' Global.Constant.Structure.Declaration:

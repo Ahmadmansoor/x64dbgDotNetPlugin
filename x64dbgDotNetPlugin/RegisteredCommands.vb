@@ -1,6 +1,6 @@
 ﻿Imports System.Text
 Imports System.Runtime.InteropServices
-
+Imports System.Windows.Forms
 Module RegisteredCommands
     Const MAX_MODULE_SIZE = 256
     Public Function cbNetTestCommand(ByVal argc As Integer, ByVal argv() As String) As Boolean
@@ -60,25 +60,19 @@ Module RegisteredCommands
             _plugin_logputs("[DotNet TEST] could not get module base name...")
             Return False
         End If
-        Dim szFileName As String = ""
-        'Dim len As UInteger = [mod].Length
-        'Do While [mod].Chars(len) <> "."c AndAlso len <> 0
-        '    len -= 1
-        'Loop
-        'Dim ext As String = ""
-        'If len <> 0 Then
-        '    ext = [mod].Substring(len)
-        '    [mod] = [mod].Substring(0, len)
-        'End If
-        'szFileName = String.Format("{0}_dump{1}", [mod], ext)
-        'If Not SaveFileDialog(szFileName) Then
-        '    Return True
-        'End If
-        'If Not DumpProcess(hProcess, DirectCast(base, Object), szFileName, entry) Then
-        '    _plugin_logputs("[TEST] DumpProcess failed...")
-        '    Return False
-        'End If
-        '_plugin_logputs("[TEST] Dumping done!")
+        _mod = _mods.ToString
+        Dim szFileName As String = _mod.Substring(0, _mod.IndexOf(".")) & "_dump" & _mod.Substring(_mod.IndexOf("."), _mod.Length - _mod.IndexOf("."))
+        Dim SaveFile As New SaveFileDialog()
+        SaveFile.Filter = "Dll files (*.dll)|*.dll|exe files(*.exe)|*.exe|All Files (*.*)|*.*"
+        SaveFile.FilterIndex = 2
+        SaveFile.RestoreDirectory = True
+        If SaveFile.ShowDialog = DialogResult.OK Then
+            If Not DumpProcess(hProcess, base, szFileName, entry) Then
+                _plugin_logputs("[TEST] DumpProcess failed...")
+                Return False
+            End If
+            _plugin_logputs("[TEST] Dumping done!")
+        End If
         Return True
     End Function
 
