@@ -63,11 +63,14 @@ Module RegisteredCommands
         _mod = _mods.ToString
         Dim szFileName As String = _mod.Substring(0, _mod.IndexOf(".")) & "_dump" & _mod.Substring(_mod.IndexOf("."), _mod.Length - _mod.IndexOf("."))
         Dim SaveFile As New SaveFileDialog()
-        SaveFile.Filter = "Dll files (*.dll)|*.dll|exe files(*.exe)|*.exe|All Files (*.*)|*.*"
-        SaveFile.FilterIndex = 2
+        'SaveFile.Filter = "Dll files (*.dll)|*.dll|exe files(*.exe)|*.exe|All Files (*.*)|*.*"
+        SaveFile.Filter = "Executables (*.dll,*.exe)|*.exe|All Files (*.*)|*.*"
+        'SaveFile.FilterIndex = 2
         SaveFile.RestoreDirectory = True
+        SaveFile.FileName = szFileName
         If SaveFile.ShowDialog = DialogResult.OK Then
-            If Not DumpProcess(hProcess, base, szFileName, entry) Then
+            Dim Path As String = SaveFile.FileName
+            If Not DumpProcess(hProcess, base, Path, entry) Then
                 _plugin_logputs("[TEST] DumpProcess failed...")
                 Return False
             End If
