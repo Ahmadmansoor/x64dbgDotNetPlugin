@@ -6,8 +6,8 @@ Imports x64dbgDotNetPlugin.RegisteredCommands
 
 Module FunctionCode
     Const about = 0
-    Const GotoAPI = 1
-    Const HexEditor_Menu = 2
+    Const MENU_DUMP = 1
+    Const MENU_TEST = 2
     Const submenuentry = 3
 
     ' Public Sub _plugin_registercallback(ByVal pluginHandle As Integer, ByVal cbType As CBTYPE, ByVal cbPlugin As CBPLUGIN)
@@ -22,14 +22,15 @@ Module FunctionCode
 
     Public Sub PlugIn_Init(<MarshalAs(UnmanagedType.LPStruct)> ByRef initStruct As PLUG_INITSTRUCT)
         _plugin_logprintf("[DotNet TEST] pluginHandle: %d" & ControlChars.Lf, pluginHandle)
-        If (_plugin_registercommand(pluginHandle, "DotNetplugin", AddressOf cbNetTestCommand, False) = False) Then
+        If (_plugin_registercommand(pluginHandle, "DotNetpluginTestCommand", AddressOf cbNetTestCommand, False) = False) Then
             _plugin_logputs("[DotNet TEST] error registering the \plugin1\ command!")
         End If
-
         If (_plugin_registercommand(pluginHandle, "DotNetDumpProcess", AddressOf cbDumpProcessCommand, True) = False) Then
-            _plugin_logputs("[DotNet TEST] error registering the \DumpProcess\ command!")
+            _plugin_logputs("[DotNet TEST] error registering the \DotNetDumpProcess\ command!")
         End If
-
+        If (_plugin_registercommand(pluginHandle, "DotNetModuleEnum", AddressOf cbModuleEnum, True) = False) Then
+            _plugin_logputs("[DotNet TEST] error registering the \grs\ command!")
+        End If
 
 
         '_plugin_registercallback(pluginHandle, CBTYPE.CB_INITDEBUG, AddressOf cbInitDebug)
@@ -45,7 +46,7 @@ Module FunctionCode
 
     Public Sub PlugIn_SetUp()
         _plugin_menuaddentry(hMenu, 0, "&About...")
-        _plugin_menuaddentry(hMenu, 1, "&Go To APi")
+        _plugin_menuaddentry(hMenu, 1, "&DotNetDumpProcess")
         _plugin_menuaddentry(hMenu, 2, "&Hex Editor")
         Dim mysubmenu As Int32 = _plugin_menuadd(hMenu, "sub menu") ' //this only adds a 'fake' new menu
         _plugin_menuaddentry(mysubmenu, 3, "sub menu entry") ' //this is the new entry, it will be placed inside the submenu
@@ -62,17 +63,14 @@ Module FunctionCode
                 'this will be called when submenu entry is pressed
 
             Case about
-                'DbgCmdExec("DumpProcess");
-                'C++ TO VB CONVERTER TODO TASK: The HWND argument in the MessageBox call is ignored:
-                'ORIGINAL LINE: MessageBoxA(GuiGetWindowHandle(),"Strong x64_dbg Plugins ,Coded By Ahmadmansoor&mrexodia /exetools","Info",0);
-                MsgBox("Strong x64_dbg Plugins ,Coded By Ahmadmansoor&mrexodia /exetools", MsgBoxStyle.OkOnly, "Info")
-            Case GotoAPI
-                '		if (!DbgIsDebugging())
-                '		{break;}	
-                '		_plugin_logputs("[GoTODialog] Show GoTO Dialog!");
-                'GoToDialogInNewThread();		
-                'DbgCmdExec("GTD")
-            Case HexEditor_Menu
+                 MsgBox("Test DotNet Plugins For x64dbg " & Environment.NewLine & "Coded By Ahmadmansoor/exetools", MsgBoxStyle.OkOnly, "Info")
+            Case MENU_DUMP
+                If (DbgIsDebugging() = False) Then
+                    _plugin_logputs("You need to be debugging to use this Command")
+                    Exit Select
+                End If
+                DbgCmdExec("DotNetDumpProcess")
+                'Case HexEditor_Menu
                 'DbgCmdExec("HexEditor")
                 '		if (!DbgIsDebugging())
                 '		{break;}

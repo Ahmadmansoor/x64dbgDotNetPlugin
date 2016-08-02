@@ -5,11 +5,15 @@ Module RegisteredCommands
     Const MAX_MODULE_SIZE = 256
     Public Function cbNetTestCommand(ByVal argc As Integer, ByVal argv() As String) As Boolean
         _plugin_logputs("[.net TEST] .Net test command!")
-        Dim line As String = ""
-        If Not GuiGetLineWindow("test", line) Then
+        Dim line As String = String.Empty
+        'Dim LinePtr As IntPtr
+        'Dim retvalue As Boolean = GuiGetLineWindow("test", LinePtr)
+        'line = Marshal.PtrToStringAnsi(LinePtr)
+        line = InputBox("Enter value pls", "NetTest")
+        If (line Is Nothing Or line = "") Then
             _plugin_logputs("[TEST] cancel pressed!")
         Else
-            _plugin_logprintf("[TEST] line: ""%s""" & ControlChars.Lf, line)
+            _plugin_logputs("[TEST] line: " & line)
         End If
         Return True
     End Function
@@ -79,5 +83,10 @@ Module RegisteredCommands
         Return True
     End Function
 
+    Public Function cbModuleEnum(ByVal argc As Integer, ByVal argv() As String) As Boolean
+        MsgBox("Not Done Yet ", MsgBoxStyle.OkOnly, "next time")
+
+
+    End Function
 
 End Module
