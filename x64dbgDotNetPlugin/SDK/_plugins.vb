@@ -4,6 +4,7 @@ Imports System.Runtime.InteropServices
 Module _plugins
     Const PLUG_SDKVERSION = 1
     Public pluginHandle As Integer
+    Public Const MAX_PATH As Integer = 260
 
     Public Delegate Sub CBPLUGIN(ByVal cbType As CBTYPE, ByRef callbackInfo As Object)
     Public Delegate Function CBPLUGINCOMMAND(ByVal argc As Integer, ByVal argv() As String) As Boolean
@@ -58,6 +59,14 @@ Module _plugins
     End Enum
     <StructLayout(LayoutKind.Sequential)> Public Structure PLUG_CB_MENUENTRY
         Dim hEntry As Int32
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)> Public Structure PLUG_CB_LOADDLL
+        '<MarshalAs(UnmanagedType.Struct)>
+        Dim LoadDll As IntPtr   ' LOAD_DLL_DEBUG_INFO
+        '<MarshalAs(UnmanagedType.Struct)>
+        Dim modInfo As IntPtr   'IMAGEHLP_MODULE64
+        Dim modname As String
     End Structure
 
     <StructLayout(LayoutKind.Sequential)> Public Structure PLUG_INITSTRUCT
@@ -146,36 +155,38 @@ Module _plugins
         SymVirtual
         NumSymTypes
     End Enum
-
-    <StructLayout(LayoutKind.Sequential)> Public Structure IMAGEHLP_MODULE64
-        Public SizeOfStruct As UInteger ' set to sizeof(IMAGEHLP_MODULE64)
-        Public BaseOfImage As ULong ' base load address of module
-        Public ImageSize As UInteger ' virtual size of the loaded module
-        Public TimeDateStamp As UInteger ' date/time stamp from pe header
-        Public CheckSum As UInteger ' checksum from the pe header
-        Public NumSyms As UInteger ' number of symbols in the symbol table
-        Public SymType As SYM_TYPE() ' type of symbols loaded
-        Public ModuleName As String ' module name
-        Public ImageName As String ' image name
-        Public LoadedImageName As String ' symbol file name
-        ' new elements: 07-Jun-2002
-        Public LoadedPdbName As String ' pdb file name
-        Public CVSig As UInteger ' Signature of the CV record in the debug directories
-        Public CVData As String ' Contents of the CV record
-        Public PdbSig As UInteger ' Signature of PDB
-        Public PdbSig70 As Guid() ' Signature of PDB (VC 7 and up)
-        Public PdbAge As UInteger ' DBI age of pdb
-        Public PdbUnmatched As Integer ' loaded an unmatched pdb
-        Public DbgUnmatched As Integer ' loaded an unmatched dbg
-        Public LineNumbers As Integer ' we have line number information
-        Public GlobalSymbols As Integer ' we have internal symbol information
-        Public TypeInfo As Integer ' we have type information
-        ' new elements: 17-Dec-2003
-        Public SourceIndexed As Integer ' pdb supports source server
-        Public Publics As Integer ' contains public symbols
-        ' new element: 15-Jul-2009
-        Public MachineType As UInteger ' IMAGE_FILE_MACHINE_XXX from ntimage.h and winnt.h
-        Public Reserved As UInteger ' Padding - don't remove.
+    <StructLayoutAttribute(LayoutKind.Sequential, CharSet:=CharSet.Ansi)>
+    Public Structure IMAGEHLP_MODULE64
+        Public SizeOfStruct As UInteger
+        Public BaseOfImage As ULong
+        Public ImageSize As UInteger
+        Public TimeDateStamp As UInteger
+        Public CheckSum As UInteger
+        Public NumSyms As UInteger
+        <MarshalAs(UnmanagedType.ByValArray)> Public SymType As SYM_TYPE()
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)> Public ModuleName As String
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=256)> Public ImageName As String
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=256)> Public LoadedImageName As String
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=256)> Public LoadedPdbName As String
+        Public CVSig As UInteger
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=(MAX_PATH * 3))> Public CVData As String
+        Public PdbSig As UInteger
+        Public PdbSig70 As GUID
+        Public PdbAge As UInteger
+        Public PdbUnmatched As Integer
+        Public DbgUnmatched As Integer
+        Public LineNumbers As Integer
+        Public GlobalSymbols As Integer
+        Public TypeInfo As Integer
+        Public SourceIndexed As Integer
+        Public Publics As Integer
+    End Structure
+    <StructLayoutAttribute(LayoutKind.Sequential, CharSet:=CharSet.Ansi)>
+    Public Structure GUID
+        Public Data1 As UInteger
+        Public Data2 As UShort
+        Public Data3 As UShort
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=8)> Public Data4 As String
     End Structure
     <StructLayout(LayoutKind.Sequential)> Structure PROCESS_INFORMATION
         Public hProcess As IntPtr

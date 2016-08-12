@@ -36,7 +36,7 @@ Module FunctionCode
         '_plugin_registercallback(pluginHandle, CBTYPE.CB_INITDEBUG, AddressOf cbInitDebug)
         '_plugin_registercallback(pluginHandle, CBTYPE.CB_STOPDEBUG, AddressOf cbStopDebug)
         '_plugin_registercallback(pluginHandle, CBTYPE.CB_MENUENTRY, AddressOf cbStrongMenuEntry)
-        '_plugin_registercallback(pluginHandle, CB_LOADDLL, CBLOADDLL)
+        '_plugin_registercallback(pluginHandle, CBTYPE.CB_LOADDLL, AddressOf CBLOADDLL)
     End Sub
 
     Public Sub PlugIn_Stop()
@@ -54,6 +54,22 @@ Module FunctionCode
         'hMenu = also a submenu, but it is the submenu of the plugin
     End Sub
 
+    <DllExport("CBLOADDLL")> _
+    Public Sub CBLOADDLL(ByVal cbType As CBTYPE, ByVal info As PLUG_CB_LOADDLL)
+
+        Dim lddi As New LOAD_DLL_DEBUG_INFO
+        lddi = DirectCast(Marshal.PtrToStructure(info.LoadDll, GetType(LOAD_DLL_DEBUG_INFO)), LOAD_DLL_DEBUG_INFO)
+        Dim FileHandle As IntPtr = lddi.hFile
+
+        Dim lddix As New IMAGEHLP_MODULE64
+        lddix = DirectCast(Marshal.PtrToStructure(info.modInfo, GetType(IMAGEHLP_MODULE64)), IMAGEHLP_MODULE64)
+        '_plugin_logputs("test")
+        _plugin_logputs("DotNet Log value :" & lddix.ImageName.ToString)
+
+        'Dim s As String = info.modname
+
+
+    End Sub
     <DllExport("CBMENUENTRY")> _
     Public Sub CBMENUENTRY(ByVal cbType As CBTYPE, ByRef info As PLUG_CB_MENUENTRY)
         'Dim info As PLUG_CB_MENUENTRY = DirectCast(callbackInfo, PLUG_CB_MENUENTRY)
@@ -63,7 +79,7 @@ Module FunctionCode
                 'this will be called when submenu entry is pressed
 
             Case about
-                 MsgBox("Test DotNet Plugins For x64dbg " & Environment.NewLine & "Coded By Ahmadmansoor/exetools", MsgBoxStyle.OkOnly, "Info")
+                MsgBox("Test DotNet Plugins For x64dbg " & Environment.NewLine & "Coded By Ahmadmansoor/exetools", MsgBoxStyle.OkOnly, "Info")
             Case MENU_DUMP
                 If (DbgIsDebugging() = False) Then
                     _plugin_logputs("You need to be debugging to use this Command")

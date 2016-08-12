@@ -84,9 +84,18 @@ Module RegisteredCommands
     End Function
 
     Public Function cbModuleEnum(ByVal argc As Integer, ByVal argv() As String) As Boolean
-        MsgBox("Not Done Yet ", MsgBoxStyle.OkOnly, "next time")
+        'MsgBox("Not Done Yet ", MsgBoxStyle.OkOnly, "next time")
+        Dim ModuleInfo_Strc() As List(Of ModuleInfo)
 
-
+        'Dim modlist As IntPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ModuleInfo_Strc)) ' New List(Of ModuleInfo)
+        Dim s As Boolean = GetList(ModuleInfo_Strc)
+        'Marshal.PtrToStructure(modlist, ModuleInfo_Strc)
+        Return 1
     End Function
+
+    'Public Function CBLOADDLL(ByVal argc As Integer, ByVal argv() As String) As Boolean
+
+    '    Return 1
+    'End Function
 
 End Module
