@@ -55,7 +55,9 @@ Module FunctionCode
     End Sub
 
     <DllExport("CBLOADDLL")> _
-    Public Sub CBLOADDLL(ByVal cbType As CBTYPE, ByVal info As PLUG_CB_LOADDLL)
+    Public Sub CBLOADDLL(ByVal cbType As CBTYPE, ByVal info As PLUG_CB_LOADDLL)  ' For Call back if u not use IntPtr then u have to use ByVal or u will get Error in x64dbg
+        Dim ModuleInfo_Strc As New List(Of ModuleInfo)
+        Dim temp As New ModuleInfo
 
         Dim lddi As New LOAD_DLL_DEBUG_INFO
         lddi = DirectCast(Marshal.PtrToStructure(info.LoadDll, GetType(LOAD_DLL_DEBUG_INFO)), LOAD_DLL_DEBUG_INFO)
@@ -64,9 +66,32 @@ Module FunctionCode
         Dim lddix As New IMAGEHLP_MODULE64
         lddix = DirectCast(Marshal.PtrToStructure(info.modInfo, GetType(IMAGEHLP_MODULE64)), IMAGEHLP_MODULE64)
         '_plugin_logputs("test")
-        _plugin_logputs("DotNet Log value :" & lddix.ImageName.ToString)
-
+        '_plugin_logputs("DotNet Log value :" & lddix.ImageName.ToString)
         'Dim s As String = info.modname
+        temp.base = lddix.BaseOfImage
+        temp.size = lddix.ImageSize
+        temp.entry = lddix.BaseOfImage
+
+        '''''test
+        Dim infox As New MODINFO
+        infox.base = temp.base
+        infox.size = temp.size
+        infox.fileHandle = vbNull
+        infox.loadedSize = 0
+        infox.fileMap = vbNull
+        infox.fileMapVA = 0
+        infox.name = lddix.ModuleName
+
+
+        'If StaticFileLoadW(lddix.ImageName, UE_ACCESS_READ, False, infox.fileHandle, infox.loadedSize, infox.fileMap, infox.fileMapVA) Then
+        '    GetModuleInfo(info, info.fileMapVA)
+        'Else
+        '    info.fileHandle = Nothing
+        '    info.loadedSize = 0
+        '    info.fileMap = Nothing
+        '    info.fileMapVA = 0
+        'End If
+        ModuleInfo_Strc.Add(temp)
 
 
     End Sub

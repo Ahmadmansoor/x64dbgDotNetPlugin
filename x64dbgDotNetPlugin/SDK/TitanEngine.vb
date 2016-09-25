@@ -245,4 +245,11 @@ Module TitanEngine
     Public Const UE_R15 = 34
     Public Const UE_CIP = 35
     Public Const UE_CSP = 36
+
+
+    <DllImport("TitanEngine.dll")> _
+    Public Function StaticFileLoadW(ByVal szFileName As String, ByVal DesiredAccess As UInteger, ByVal SimulateLoad As Boolean, ByVal FileHandle As IntPtr, ByRef LoadedSize As UInteger, ByVal FileMap As IntPtr, ByVal FileMapVA As System.IntPtr) As Boolean
+    End Function
+
+
 End Module

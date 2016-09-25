@@ -9,6 +9,7 @@ Module bridgemain
     Public Const MAX_LABEL_SIZE = 256
     Public Const MAX_COMMENT_SIZE = 512
     Public Const MAX_MODULE_SIZE = 256
+    Public Const MAX_PATH = 260
     Public Const MAX_IMPORT_SIZE = 65536
     Public Const MAX_BREAKPOINT_SIZE = 256
     Public Const MAX_CONDITIONAL_EXPR_SIZE = 256
@@ -23,7 +24,7 @@ Module bridgemain
     Public Const MAX_COMMAND_LINE_SIZE = 256
     Public Const MAX_MNEMONIC_SIZE = 64
     Public Const PAGE_SIZE = &H1000
-    Public Const MAX_PATH = 260
+
 
 
     <DllImport("x64_bridge.dll")> _

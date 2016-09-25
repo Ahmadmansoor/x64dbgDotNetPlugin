@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 
 Module Script
-    Public Const MAX_PATH = 260
+
     <StructLayout(LayoutKind.Sequential)> Structure ModuleInfo
         Public base As Int64
         Public size As Int64
@@ -64,9 +64,9 @@ Module Script
     <DllImport("x64dbg.dll")>
     Public Function SectionListFromAddr(ByVal addr As Int64, ByVal list As List(Of ModuleSectionInfo)) As Boolean
     End Function
-    <DllImport("x64dbg.dll")>
-    Public Function SectionListFromName(ByVal name As String, ByVal list As List(Of ModuleSectionInfo)) As Boolean
-    End Function
+    '<DllImport("x64dbg.dll")>
+    'Public Function SectionListFromName(ByVal name As String, ByVal list As List(Of ModuleSectionInfo)) As Boolean
+    'End Function
     <DllImport("x64dbg.dll")>
     Public Function GetMainModuleInfo(ByVal info As IntPtr) As Boolean 'info as ModuleInfo
     End Function
@@ -91,6 +91,10 @@ Module Script
     <DllImport("x64dbg.dll")>
     Public Function GetMainModuleSectionList(ByVal list As List(Of ModuleSectionInfo)) As Boolean 'caller has the responsibility to free the list
     End Function
+    <DllImport("x64dbg.dll")>
+    Function ModInfoFromAddr(ByVal Address As Int64) As MODINFO
+    End Function
+
     'Declare Function GetList Lib "x64dbg.dll" Alias "GetList" (ByRef list As IntPtr) As Boolean
     '<DllImport("x64dbg.dll", EntryPoint:="GetList", CharSet:=CharSet.Ansi, CallingConvention:=CallingConvention.Cdecl)>
     'Public Function GetList(ByRef list As IntPtr) As Boolean 'List(Of ModuleInfo) 'caller has the responsibility to free the list
@@ -100,7 +104,11 @@ Module Script
     'End Function
 
     <DllImport("x64dbg.dll", CallingConvention:=CallingConvention.Cdecl, EntryPoint:="?GetList@Module@Script@@YA_NPEAUListInfo@@@Z")>
-    Function GetList(ByRef listInfo() As List(Of ModuleInfo)) As Boolean
+    Function GetList(ByRef listInfo As List(Of ModuleInfo)) As Boolean
+    End Function
+
+    Public Function SectionListFromAddrX(ByVal addr As Int64, ByVal list As List(Of ModuleSectionInfo)) As Boolean
+        'Dim modInfo As ModuleInfo = ModInfoFr
     End Function
     'Function GetList(ByRef listInfo As IntPtr) As Boolean
 End Module

@@ -49,7 +49,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\x64dbg\bin\x64d\plugins\</OutputPath>
+    <OutputPath>..\..\x64dbg\bin\x64\plugins\</OutputPath>
     <DocumentationFile>x64dbgDotNetPlugin.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -125,6 +125,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RegisteredCommands.vb" />
+    <Compile Include="SDK\moduleX.vb" />
     <Compile Include="SDK\Script.vb" />
     <Compile Include="SDK\TitanEngine.vb" />
     <Compile Include="SDK\_plugins.vb" />

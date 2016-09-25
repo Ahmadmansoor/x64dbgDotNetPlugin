@@ -85,8 +85,10 @@ Module RegisteredCommands
 
     Public Function cbModuleEnum(ByVal argc As Integer, ByVal argv() As String) As Boolean
         'MsgBox("Not Done Yet ", MsgBoxStyle.OkOnly, "next time")
-        Dim ModuleInfo_Strc() As List(Of ModuleInfo)
-
+        Dim ModuleInfo_Strc As New List(Of ModuleInfo)
+        Dim temp As New ModuleInfo
+        'temp.base = info
+        'ModuleInfo_Strc.Add(
         'Dim modlist As IntPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ModuleInfo_Strc)) ' New List(Of ModuleInfo)
         Dim s As Boolean = GetList(ModuleInfo_Strc)
         'Marshal.PtrToStructure(modlist, ModuleInfo_Strc)

@@ -4,32 +4,32 @@ Imports System.Runtime.InteropServices
 Module _plugins
     Const PLUG_SDKVERSION = 1
     Public pluginHandle As Integer
-    Public Const MAX_PATH As Integer = 260
+
 
     Public Delegate Sub CBPLUGIN(ByVal cbType As CBTYPE, ByRef callbackInfo As Object)
     Public Delegate Function CBPLUGINCOMMAND(ByVal argc As Integer, ByVal argv() As String) As Boolean
-    <DllImport("x64_dbg.dll")> _
+    <DllImport("x64dbg.dll")> _
     Public Function _plugin_menuclear(ByVal hMenu As Integer) As Boolean
     End Function
-    <DllImport("x64_dbg.dll")> _
+    <DllImport("x64dbg.dll")> _
     Public Sub _plugin_logprintf(ByVal format As String, ByVal ParamArray LegacyParamArray() As Object)
     End Sub
-    <DllImport("x64_dbg.dll")> _
+    <DllImport("x64bg.dll")> _
     Public Sub _plugin_logputs(ByVal text As String)
     End Sub
-    <DllImport("x64_dbg.dll")> _
+    <DllImport("x64dbg.dll")> _
     Public Sub _plugin_registercallback(ByVal pluginHandle As Integer, ByVal cbType As CBTYPE, ByVal cbPlugin As CBPLUGIN)
     End Sub
-    <DllImport("x64_dbg.dll")> _
+    <DllImport("x64dbg.dll")> _
     Public Function _plugin_unregistercallback(ByVal pluginHandle As Integer, ByVal cbType As CBTYPE) As Boolean
     End Function
-    <DllImport("x64_dbg.dll")> _
+    <DllImport("x64dbg.dll")> _
     Public Function _plugin_menuaddentry(ByVal hMenu As Integer, ByVal hEntry As Integer, ByVal title As String) As Boolean
     End Function
-    <DllImport("x64_dbg.dll")> _
+    <DllImport("x64dbg.dll")> _
     Public Function _plugin_menuadd(ByVal hMenu As Integer, ByVal title As String) As Int32
     End Function
-    <DllImport("x64_dbg.dll")> _
+    <DllImport("x64dbg.dll")> _
     Public Function _plugin_registercommand(ByVal pluginHandle As Integer, ByVal command As String, ByVal cbCommand As CBPLUGINCOMMAND, ByVal debugonly As Boolean) As Boolean
     End Function
 
