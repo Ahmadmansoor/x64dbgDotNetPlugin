@@ -1,6 +1,10 @@
 ﻿Imports System.Text
 Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
+Imports x64dbgDotNetPlugin.Script
+Imports x64dbgDotNetPlugin._plugins
+Imports x64dbgDotNetPlugin.Plog
+Imports x64dbgDotNetPlugin.Extensions
 Module RegisteredCommands
     Const MAX_MODULE_SIZE = 256
     Public Function cbNetTestCommand(ByVal argc As Integer, ByVal argv() As String) As Boolean
@@ -84,15 +88,24 @@ Module RegisteredCommands
     End Function
 
     Public Function cbModuleEnum(ByVal argc As Integer, ByVal argv() As String) As Boolean
-        'MsgBox("Not Done Yet ", MsgBoxStyle.OkOnly, "next time")
-        Dim ModuleInfo_Strc As New List(Of ModuleInfo)
-        Dim temp As New ModuleInfo
-        'temp.base = info
-        'ModuleInfo_Strc.Add(
-        'Dim modlist As IntPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ModuleInfo_Strc)) ' New List(Of ModuleInfo)
-        Dim s As Boolean = GetList(ModuleInfo_Strc)
-        'Marshal.PtrToStructure(modlist, ModuleInfo_Strc)
-        Return 1
+        ''MsgBox("Not Done Yet ", MsgBoxStyle.OkOnly, "next time")
+        'Dim ModuleInfo_Strc As New List(Of ModuleInfo)
+        'Dim temp As New ModuleInfo
+        ''temp.base = info
+        ''ModuleInfo_Strc.Add(
+        ''Dim modlist As IntPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ModuleInfo_Strc)) ' New List(Of ModuleInfo)
+        'Dim s As Boolean = GetList(ModuleInfo_Strc)
+        ''Marshal.PtrToStructure(modlist, ModuleInfo_Strc)
+        'Return 1
+
+        For Each _mod In GetList()
+            WriteLine("[DotNet TEST]" + " " + _mod.base.ToPtrString + " " + _mod.name.ToString)
+            For Each section In SectionListFromAddr(_mod.base)
+                WriteLine("[DotNet TEST]" + " " + section.addr.ToPtrString + " " + section.name)
+            Next section
+            WriteLine("")
+        Next _mod
+
     End Function
 
     'Public Function CBLOADDLL(ByVal argc As Integer, ByVal argv() As String) As Boolean

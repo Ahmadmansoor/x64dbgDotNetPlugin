@@ -125,7 +125,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RegisteredCommands.vb" />
+    <Compile Include="SDK\Extensions.vb" />
     <Compile Include="SDK\moduleX.vb" />
+    <Compile Include="SDK\Plog.vb" />
     <Compile Include="SDK\Script.vb" />
     <Compile Include="SDK\TitanEngine.vb" />
     <Compile Include="SDK\_plugins.vb" />

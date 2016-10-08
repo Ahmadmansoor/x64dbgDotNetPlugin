@@ -1,20 +1,20 @@
 ﻿Imports System.Runtime.InteropServices
-
+Imports x64dbgDotNetPlugin.bridgemain
 Module Script
 
-    <StructLayout(LayoutKind.Sequential)> Structure ModuleInfo
-        Public base As Int64
-        Public size As Int64
-        Public entry As Int64
-        Public sectionCount As Integer
-        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_MODULE_SIZE)> Public name As String
-        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_PATH)> Public path As String
-    End Structure
-    <StructLayout(LayoutKind.Sequential)> Structure ModuleSectionInfo
-        Public addr As Int64
-        Public size As Int64
-        Public name As String
-    End Structure
+    '<StructLayout(LayoutKind.Sequential)> Structure ModuleInfo
+    '    Public base As Int64
+    '    Public size As Int64
+    '    Public entry As Int64
+    '    Public sectionCount As Integer
+    '    <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_MODULE_SIZE)> Public name As String
+    '    <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_PATH)> Public path As String
+    'End Structure
+    '<StructLayout(LayoutKind.Sequential)> Structure ModuleSectionInfo
+    '    Public addr As Int64
+    '    Public size As Int64
+    '    Public name As String
+    'End Structure
 
     <DllImport("x64dbg.dll")> _
     Public Function InfoFromAddr(ByVal addr As Int64, ByRef info As IntPtr) As Boolean 'IntPtr=ModuleInfo
@@ -107,8 +107,47 @@ Module Script
     Function GetList(ByRef listInfo As List(Of ModuleInfo)) As Boolean
     End Function
 
-    Public Function SectionListFromAddrX(ByVal addr As Int64, ByVal list As List(Of ModuleSectionInfo)) As Boolean
-        'Dim modInfo As ModuleInfo = ModInfoFr
-    End Function
+    'Public Function SectionListFromAddrX(ByVal addr As Int64, ByVal list As List(Of ModuleSectionInfo)) As Boolean
+    '    'Dim modInfo As ModuleInfo = ModInfoFr
+    'End Function
     'Function GetList(ByRef listInfo As IntPtr) As Boolean
+
+
+    Public Structure ModuleInfo
+        Public base As IntPtr
+        Public size As IntPtr
+        Public entry As IntPtr
+        Public sectionCount As Integer
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_MODULE_SIZE)>
+        Public name As String
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_PATH)>
+        Public path As String
+    End Structure
+
+    Public Structure ModuleSectionInfo
+        Public addr As IntPtr
+        Public size As IntPtr
+        <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_SECTION_SIZE * 5)>
+        Public name As String
+    End Structure
+
+    <DllImport("x64dbg.dll", CallingConvention:=CallingConvention.Cdecl, EntryPoint:="?GetList@Module@Script@@YA_NPEAUListInfo@@@Z")>
+    Private Function ScriptModuleGetList(ByRef listInfo As ListInfo) As Boolean
+    End Function
+
+    Public Function GetList() As ModuleInfo()
+        Dim listInfo = New ListInfo()
+        Return listInfo.ToArray(Of ModuleInfo)(ScriptModuleGetList(listInfo))
+    End Function
+
+    <DllImport("x64dbg.dll", CallingConvention:=CallingConvention.Cdecl, EntryPoint:="?SectionListFromAddr@Module@Script@@YA_N_KPEAUListInfo@@@Z")>
+    Private Function ScriptModuleSectionListFromAddr(ByVal addr As IntPtr, ByRef listInfo As ListInfo) As Boolean
+    End Function
+
+    Public Function SectionListFromAddr(ByVal addr As IntPtr) As ModuleSectionInfo()
+        Dim listInfo = New ListInfo()
+        Return listInfo.ToArray(Of ModuleSectionInfo)(ScriptModuleSectionListFromAddr(addr, listInfo))
+    End Function
+
+
 End Module

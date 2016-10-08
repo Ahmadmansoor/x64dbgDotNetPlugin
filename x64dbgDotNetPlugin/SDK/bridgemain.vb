@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Text
+Imports System.IO
 
 Module bridgemain
 
@@ -46,10 +47,39 @@ Module bridgemain
     <DllImport("x64_bridge.dll")> _
     Public Function DbgCmdExec(ByVal cmd As String) As Boolean
     End Function
+    <DllImport("x64_bridge.dll")> _
+    Public Function BridgeFree(ByVal size As IntPtr) As Boolean
+    End Function
 
     <StructLayout(LayoutKind.Sequential)> Public Structure ICONDATA
         Dim data As IntPtr
         Dim size As Int64
     End Structure
+
+    Public Structure ListInfo
+        Public count As Integer
+        Public size As IntPtr
+        Public data As IntPtr
+
+        Public Function ToArray(Of T As New)(ByVal success As Boolean) As T()
+            If Not success OrElse count = 0 OrElse size = IntPtr.Zero Then
+                Return New T() {}
+            End If
+            Dim list = New T(count - 1) {}
+            Dim szt = Marshal.SizeOf(GetType(T))
+            Dim sz = size.ToInt32() \ count
+            If szt <> sz Then
+                Throw New InvalidDataException(String.Format("{0} type size mismatch, expected {1} got {2}!", GetType(T).Name, szt, sz))
+            End If
+            Dim ptr = data
+            For i = 0 To count - 1
+                list(i) = CType(Marshal.PtrToStructure(ptr, GetType(T)), T)
+                ptr += sz
+            Next i
+            BridgeFree(data)
+            Return list
+        End Function
+    End Structure
+
 End Module
 
