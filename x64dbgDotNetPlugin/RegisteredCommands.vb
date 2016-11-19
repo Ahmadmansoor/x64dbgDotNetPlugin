@@ -97,7 +97,7 @@ Module RegisteredCommands
         'Dim s As Boolean = GetList(ModuleInfo_Strc)
         ''Marshal.PtrToStructure(modlist, ModuleInfo_Strc)
         'Return 1
-
+        ' by MrExodia
         For Each _mod In GetList()
             WriteLine("[DotNet TEST]" + " " + _mod.base.ToPtrString + " " + _mod.name.ToString)
             For Each section In SectionListFromAddr(_mod.base)
@@ -105,12 +105,13 @@ Module RegisteredCommands
             Next section
             WriteLine("")
         Next _mod
-
+        Return 1
     End Function
 
-    'Public Function CBLOADDLL(ByVal argc As Integer, ByVal argv() As String) As Boolean
-
-    '    Return 1
-    'End Function
+    Public Function cbLoader(ByVal argc As Integer, ByVal argv() As String) As Boolean
+        Dim Loader_Form As New LoaderForm
+        Loader_Form.ShowDialog()
+        Return 1
+    End Function
 
 End Module

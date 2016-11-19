@@ -23,15 +23,17 @@ Module FunctionCode
     Public Sub PlugIn_Init(<MarshalAs(UnmanagedType.LPStruct)> ByRef initStruct As PLUG_INITSTRUCT)
         _plugin_logprintf("[DotNet TEST] pluginHandle: %d" & ControlChars.Lf, pluginHandle)
         If (_plugin_registercommand(pluginHandle, "DotNetpluginTestCommand", AddressOf cbNetTestCommand, False) = False) Then
-            _plugin_logputs("[DotNet TEST] error registering the \plugin1\ command!")
+            _plugin_logputs("[DotNet TEST] error registering the \DotNetpluginTestCommand\ command!")
         End If
         If (_plugin_registercommand(pluginHandle, "DotNetDumpProcess", AddressOf cbDumpProcessCommand, True) = False) Then
             _plugin_logputs("[DotNet TEST] error registering the \DotNetDumpProcess\ command!")
         End If
         If (_plugin_registercommand(pluginHandle, "DotNetModuleEnum", AddressOf cbModuleEnum, True) = False) Then
-            _plugin_logputs("[DotNet TEST] error registering the \grs\ command!")
+            _plugin_logputs("[DotNet TEST] error registering the \DotNetModuleEnum\ command!")
         End If
-
+        If (_plugin_registercommand(pluginHandle, "Loader", AddressOf cbLoader, True) = False) Then
+            _plugin_logputs("[DotNet TEST] error registering the \Loader\ command!")
+        End If
 
         '_plugin_registercallback(pluginHandle, CBTYPE.CB_INITDEBUG, AddressOf cbInitDebug)
         '_plugin_registercallback(pluginHandle, CBTYPE.CB_STOPDEBUG, AddressOf cbStopDebug)
@@ -56,31 +58,31 @@ Module FunctionCode
 
     <DllExport("CBLOADDLL")> _
     Public Sub CBLOADDLL(ByVal cbType As CBTYPE, ByVal info As PLUG_CB_LOADDLL)  ' For Call back if u not use IntPtr then u have to use ByVal or u will get Error in x64dbg
-        Dim ModuleInfo_Strc As New List(Of ModuleInfo)
-        Dim temp As New ModuleInfo
+        'Dim ModuleInfo_Strc As New List(Of ModuleInfo)
+        'Dim temp As New ModuleInfo
 
-        Dim lddi As New LOAD_DLL_DEBUG_INFO
-        lddi = DirectCast(Marshal.PtrToStructure(info.LoadDll, GetType(LOAD_DLL_DEBUG_INFO)), LOAD_DLL_DEBUG_INFO)
-        Dim FileHandle As IntPtr = lddi.hFile
+        'Dim lddi As New LOAD_DLL_DEBUG_INFO
+        'lddi = DirectCast(Marshal.PtrToStructure(info.LoadDll, GetType(LOAD_DLL_DEBUG_INFO)), LOAD_DLL_DEBUG_INFO)
+        'Dim FileHandle As IntPtr = lddi.hFile
 
-        Dim lddix As New IMAGEHLP_MODULE64
-        lddix = DirectCast(Marshal.PtrToStructure(info.modInfo, GetType(IMAGEHLP_MODULE64)), IMAGEHLP_MODULE64)
-        '_plugin_logputs("test")
-        '_plugin_logputs("DotNet Log value :" & lddix.ImageName.ToString)
-        'Dim s As String = info.modname
-        temp.base = lddix.BaseOfImage
-        temp.size = lddix.ImageSize
-        temp.entry = lddix.BaseOfImage
+        'Dim lddix As New IMAGEHLP_MODULE64
+        'lddix = DirectCast(Marshal.PtrToStructure(info.modInfo, GetType(IMAGEHLP_MODULE64)), IMAGEHLP_MODULE64)
+        ''_plugin_logputs("test")
+        ''_plugin_logputs("DotNet Log value :" & lddix.ImageName.ToString)
+        ''Dim s As String = info.modname
+        'temp.base = lddix.BaseOfImage
+        'temp.size = lddix.ImageSize
+        'temp.entry = lddix.BaseOfImage
 
-        '''''test
-        Dim infox As New MODINFO
-        infox.base = temp.base
-        infox.size = temp.size
-        infox.fileHandle = vbNull
-        infox.loadedSize = 0
-        infox.fileMap = vbNull
-        infox.fileMapVA = 0
-        infox.name = lddix.ModuleName
+        ' '''''test
+        'Dim infox As New MODINFO
+        'infox.base = temp.base
+        'infox.size = temp.size
+        'infox.fileHandle = vbNull
+        'infox.loadedSize = 0
+        'infox.fileMap = vbNull
+        'infox.fileMapVA = 0
+        'infox.name = lddix.ModuleName
 
 
         'If StaticFileLoadW(lddix.ImageName, UE_ACCESS_READ, False, infox.fileHandle, infox.loadedSize, infox.fileMap, infox.fileMapVA) Then
@@ -91,7 +93,7 @@ Module FunctionCode
         '    info.fileMap = Nothing
         '    info.fileMapVA = 0
         'End If
-        ModuleInfo_Strc.Add(temp)
+        'ModuleInfo_Strc.Add(temp)
 
 
     End Sub

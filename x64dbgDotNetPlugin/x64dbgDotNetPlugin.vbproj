@@ -87,6 +87,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -104,6 +105,12 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\LoaderForm.Designer.vb">
+      <DependentUpon>LoaderForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LoaderForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SDK\API.vb" />
     <Compile Include="SDK\bridgemain.vb" />
     <Compile Include="FunctionCode.vb" />
@@ -133,6 +140,9 @@
     <Compile Include="SDK\_plugins.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\LoaderForm.resx">
+      <DependentUpon>LoaderForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -151,6 +161,11 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Resources\rcdata1.bin" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Loader.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets" Condition="Exists('../packages/UnmanagedExports.1.2.7/tools/RGiesecke.DllExport.targets')" />

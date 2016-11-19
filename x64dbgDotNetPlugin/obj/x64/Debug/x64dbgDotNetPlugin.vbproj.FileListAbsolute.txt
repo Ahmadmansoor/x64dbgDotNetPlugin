@@ -19,3 +19,4 @@ D:\Code\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.p
 D:\Code\x64dbg\bin\x64d\plugins\x64dbgDotNetPlugin.dll
 D:\Code\x64dbg\bin\x64d\plugins\x64dbgDotNetPlugin.pdb
 D:\Code\x64dbg\bin\x64d\plugins\x64dbgDotNetPlugin.xml
+D:\Code\x64dbgDotNetPlugin\x64dbgDotNetPlugin\obj\x64\Debug\x64dbgDotNetPlugin.LoaderForm.resources

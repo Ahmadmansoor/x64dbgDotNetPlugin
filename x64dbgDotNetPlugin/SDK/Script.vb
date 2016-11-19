@@ -103,9 +103,9 @@ Module Script
     '    Dim modList As New List(Of ModuleInfo)
     'End Function
 
-    <DllImport("x64dbg.dll", CallingConvention:=CallingConvention.Cdecl, EntryPoint:="?GetList@Module@Script@@YA_NPEAUListInfo@@@Z")>
-    Function GetList(ByRef listInfo As List(Of ModuleInfo)) As Boolean
-    End Function
+    '<DllImport("x64dbg.dll", CallingConvention:=CallingConvention.Cdecl, EntryPoint:="?GetList@Module@Script@@YA_NPEAUListInfo@@@Z")>
+    'Function GetList(ByRef listInfo As List(Of ModuleInfo)) As Boolean
+    'End Function
 
     'Public Function SectionListFromAddrX(ByVal addr As Int64, ByVal list As List(Of ModuleSectionInfo)) As Boolean
     '    'Dim modInfo As ModuleInfo = ModInfoFr
