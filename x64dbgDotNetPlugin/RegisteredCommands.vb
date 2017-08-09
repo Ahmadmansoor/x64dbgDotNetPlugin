@@ -109,9 +109,16 @@ Module RegisteredCommands
     End Function
 
     Public Function cbLoader(ByVal argc As Integer, ByVal argv() As String) As Boolean
+        Dim thread As New Threading.Thread(AddressOf GoToForm)
+        thread.SetApartmentState(Threading.ApartmentState.STA)
+        thread.Start()
+
+        'Dim Loader_Form As New LoaderForm
+        'Loader_Form.ShowDialog()
+        'Return 1
+    End Function
+    Public Sub GoToForm()
         Dim Loader_Form As New LoaderForm
         Loader_Form.ShowDialog()
-        Return 1
-    End Function
-
+    End Sub
 End Module
