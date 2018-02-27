@@ -12,7 +12,7 @@ Module MainPlugin
     Public hMenu As Int64
     <DllExport("pluginit")> _
     Public Function pluginit(ByRef initStruct As PLUG_INITSTRUCT) As Boolean
-        pluginHandle = Marshal.GetHINSTANCE(System.Reflection.Assembly.GetExecutingAssembly.GetModules()(0)).ToInt32()
+        'pluginHandle = Marshal.GetHINSTANCE(System.Reflection.Assembly.GetExecutingAssembly.GetModules()(0)).ToInt32()
         initStruct.sdkVersion = plugin_version
         initStruct.pluginVersion = PLUG_SDKVERSION
         initStruct.pluginName = plugin_name

@@ -270,12 +270,12 @@ Public Class LoaderForm
             savefile.Filter = "txt files (*.exe)|*.exe"
             savefile.FileName = "loader.exe"
             savefile.RestoreDirectory = True
-            If (savefile.ShowDialog = Windows.Forms.DialogResult.OK) Then
-                TargetPath = savefile.FileName
-                My.Computer.FileSystem.WriteAllBytes(TargetPath, loader_byte, False)
-            Else
-                Exit Sub
-            End If
+            'If (savefile.ShowDialog = Windows.Forms.DialogResult.OK) Then
+            '    TargetPath = savefile.FileName
+            '    My.Computer.FileSystem.WriteAllBytes(TargetPath, loader_byte, False)
+            'Else
+            '    Exit Sub
+            'End If
         End Try
 
         'edit resource of the loader

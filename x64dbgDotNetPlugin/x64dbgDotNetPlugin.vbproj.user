@@ -5,7 +5,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <StartAction>Program</StartAction>
-    <StartProgram>D:\Code\x64dbg\bin\x64\x64dbg.exe</StartProgram>
+    <StartProgram>E:\Code\x64dbg-\bin\x64\x64dbg.exe</StartProgram>
     <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
   </PropertyGroup>
 </Project>

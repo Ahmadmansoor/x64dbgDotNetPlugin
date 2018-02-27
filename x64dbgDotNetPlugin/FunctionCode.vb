@@ -4,6 +4,8 @@ Imports System.Windows.Forms
 Imports RGiesecke.DllExport
 Imports x64dbgDotNetPlugin.RegisteredCommands
 
+
+
 Module FunctionCode
     Const about = 0
     Const MENU_DUMP = 1
@@ -106,6 +108,7 @@ Module FunctionCode
                 'this will be called when submenu entry is pressed
 
             Case about
+                'Dim x As DotNet._plugin_logputs_ = New DotNet._plugin_logputs_("test")
                 MsgBox("Test DotNet Plugins For x64dbg " & Environment.NewLine & "Coded By Ahmadmansoor/exetools", MsgBoxStyle.OkOnly, "Info")
             Case MENU_DUMP
                 If (DbgIsDebugging() = False) Then
